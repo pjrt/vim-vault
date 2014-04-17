@@ -45,11 +45,20 @@ function! VaultFoldLevel(linenum)
     endif
 endfunction
 
+function! s:GetPassword(section)
+    execute "normal! gg/== " . a:section . "\<cr>n"
+    execute "normal! /\\[Password\\]\<cr>"
+    execute 'normal! $bviw"+y'
+endfunction
+
 nmap <silent> <Plug>TogglePassword :call <SID>TogglePassword()<CR>
 nmap <silent> <Plug>CreateItem     :call <SID>CreateItem()<CR>
 
 command! -nargs=1 InsertPassword call s:InsertPassword(<args>)
 nmap <silent> <Plug>InsertPassword :call <SID>InsertPassword()<CR>
+
+command! -nargs=1 GetPassword call s:GetPassword(<args>)
+nmap <silent> <Plug>GetPassword :call <SID>GetPassword()<CR>
 
 nmap <buffer> <CR> <Plug>TogglePassword
 nmap <buffer> <Leader>c <Plug>CreateItem
